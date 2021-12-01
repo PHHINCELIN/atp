@@ -1,0 +1,106 @@
+// This file is the descriptor for the Custom code recipe get-rankings-history
+{
+    // Meta data for display purposes
+    "meta" : {
+        "label" : "ATP Rankings",
+        "description" : "Get ATP rankings from ATPworldtour.com/en/rankings/singles between 2 dates",
+        "icon" : "icon-sort-by-attributes-alt"
+    },
+
+    "kind" : "PYTHON",
+    
+
+    // Inputs and outputs are defined by roles. In the recipe's I/O tab, the user can associate one
+    // or more dataset to each input and output role.
+
+    // The "arity" field indicates whether the user can associate several datasets to the role ('NARY')
+    // or at most one ('UNARY'). The "required" field indicates whether the user is allowed to
+    // associate no dataset with the role.
+
+    // NO input for this plugin
+//    "inputRoles" : [
+//        {
+//            "name": "input_A_role",
+//            "label": "input A displayed name",
+//            "description": "what input A means",
+//            "arity": "UNARY",
+//            "required": true,
+//            "acceptsDataset": true
+//        },
+//        {
+//            "name": "input_B_role",
+//            "label": "input B displayed name",
+//            "description": "what input B means",
+//            "arity": "NARY",
+//            "required": false,
+//            "acceptsDataset": true
+//            // ,'mustBeSQL': true
+//            // ,'mustBeStrictlyType':'HDFS'
+//        }
+//        // ...
+//    ],
+
+    "outputRoles" : [
+        {
+            "name": "main_output",
+            "label": "Outpu dataset for ATP players rankings history",
+            "description": "Dataset containing ATP players ranking history",
+            "arity": "UNARY",
+            "required": true,
+            "acceptsDataset": true
+        }
+        // ...
+    ],
+
+    // The field "params" holds a list of all the params
+    // for wich the user will be prompted for values in the Settings tab of the recipe.
+
+    // The available parameter types are:
+    // STRING, INT, DOUBLE, BOOLEAN, PASSWORD, SELECT, MAP, COLUMN, COLUMNS, TEXTAREA
+
+    "params": [
+        {
+            "name": "ranking_depth",
+            "label" : "First X players of ATP ranking",
+            "type": "INT",
+            "description":"",
+            "mandatory": true,
+            "defaultValue": 100
+        },
+		{
+			"name": "separator1",
+			"label": "History fetched is defined manually",
+			"type": "SEPARATOR"
+		},
+		{
+            "name": "date_start",
+            "label" : "History date start",
+            "type": "STRING",
+            "description":"date_start < date_stop. Format MUST be yyyy-mm-dd",
+            "mandatory" : true,
+			"visibilityCondition": "!model.usePartition"
+        },
+        {
+            "name": "date_stop",
+            "label": "History date stop",
+            "type": "STRING",
+            "description":"date_start < date_stop. Format MUST be yyyy-mm-dd",
+            "mandatory" : true,
+			"visibilityCondition": "!model.usePartition"
+        },
+		{
+			"name": "separator2",
+			"label": "History fetched is defined automatically by the partitions",
+			"type": "SEPARATOR"
+		},
+		{
+			"name": "usePartition",
+			"label": "Use partitions",
+			"type": "BOOLEAN",
+			"description": "Output dataset MUST be partitionned"
+		}
+
+        
+    ]
+
+}
